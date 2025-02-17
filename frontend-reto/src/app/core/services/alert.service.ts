@@ -12,7 +12,6 @@ export class AlertService {
       text: message,
       icon: 'success',
       confirmButtonText: 'Aceptar',
-      // Ajustar z-index directamente en SweetAlert2
       customClass: {
         popup: 'swal-popup'
       }
