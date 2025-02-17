@@ -22,6 +22,12 @@ public class Rol {
     @ManyToMany(mappedBy = "roles")
     private List<Usuario> usuarios;
     
+    public Rol() {}
+    
+    public Rol(String nombre) {
+		this.nombre = nombre;
+	}
+    
     public Integer getId() {
         return id;
     }

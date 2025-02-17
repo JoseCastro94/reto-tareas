@@ -66,7 +66,8 @@ public class AuthService {
         Rol rol = rolRepository.findByNombre("ROLE_ADMIN");
         
         if(rol == null) {
-        	 throw new ResourceNotFoundException("Rol no encontrado");
+        	rol = rolRepository.save(new Rol("ROLE_ADMIN"));
+        	// throw new ResourceNotFoundException("Rol no encontrado");
         }
         
         usuario.setRoles(Collections.singletonList(rol));

@@ -1,12 +1,8 @@
 package com.app.reto.security;
 
 import io.jsonwebtoken.*;
-import io.jsonwebtoken.security.Keys;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import java.awt.RenderingHints.Key;
 import java.util.Date;
 
 @Service
@@ -15,7 +11,7 @@ public class JwtService {
 	@Value("${jwt.secret.key}")
     private String secretKey;
 	
-	public static final long EXPIRE_DURATION = 5 * 60 * 60 * 1000; //  5 HORAS
+	public static final long EXPIRE_DURATION = 1 * 60 * 60 * 1000; 
 	
     public String generateToken(String username) {
         return Jwts.builder()

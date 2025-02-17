@@ -1,0 +1,44 @@
+services:
+  mysql:
+    image: mysql:8
+    container_name: mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: password 
+      MYSQL_DATABASE: bd_reto     
+    ports:
+      - "3306:3306"  
+    networks:
+      - app-network
+    restart: always
+
+  springboot-app:
+    build:
+      context: . 
+      dockerfile: Dockerfile
+    container_name: backend-reto-app
+    ports:
+      - "9090:9090" 
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/bd_reto 
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: password  
+      JWT_SECRET: RmlzZXJvdXNBZ2VuZXJhbFZhbGlkYXRvcnlJb3Vpb0V5cGVzdQ==  
+    depends_on:
+      - mysql
+    networks:
+      - app-network
+    restart: always
+
+  angular-app:
+    build:
+      context: ../frontend-reto
+    container_name: angular-app-container
+    ports:
+      - "4200:80"
+    networks:
+      - app-network
+    restart: always
+
+networks:
+  app-network:
+    driver: bridge

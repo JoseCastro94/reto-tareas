@@ -24,11 +24,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException { 
         String token = request.getHeader("Authorization");
-
+ 
         if (token != null && token.startsWith("Bearer ")) {
-        	
             token = token.substring(7); 
-            System.out.println("Token recibido: "+ token);
             try {
                 Claims claims = jwtService.validateToken(token);
                 String username = claims.getSubject();
@@ -39,12 +37,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     );
                 }
             } catch (Exception e) {
-                logger.error("Token JWT no válido");
+                logger.error("Token JWT no válido: "+ e.getMessage());
             }
         }else {
-        	System.out.println("No se envia token");
+        	logger.error("Token no enviado.");
         }
-
         filterChain.doFilter(request, response);  
     }
 }
