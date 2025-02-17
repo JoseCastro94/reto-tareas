@@ -1,0 +1,22 @@
+<p-accordion-panel [value]="tarea.id">
+  <p-accordion-header>
+    <ng-template #toggleicon let-active="active">
+      <i class="pi" [ngClass]="active ? 'pi-minus' : 'pi-plus'"></i>
+    </ng-template>
+    <span class="flex items-center gap-2 w-full">
+      <span class="ml-2 text-sm font-semibold text-uppercase">{{ tarea.id }}</span> .
+      <span class="font-weight-bold text-uppercase">{{ tarea.titulo }}</span>
+    </span>
+  </p-accordion-header>
+  <p-accordion-content>
+    <p class="m-0">{{ tarea.descripcion }}</p>
+    <div class="mt-2 d-flex justify-content-between">
+      <button class="btn btn-info btn-sm" (click)="onEditar()">
+        <i class="fa fa-pencil-alt"></i> Editar
+      </button>
+      <button class="btn btn-danger btn-sm" (click)="onEliminar()">
+        <i class="fa fa-trash-alt"></i> Eliminar
+      </button>
+    </div>
+  </p-accordion-content>
+</p-accordion-panel>

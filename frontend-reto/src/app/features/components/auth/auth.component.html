@@ -1,0 +1,58 @@
+<div class="container-fluid" style="min-height: 100vh;">
+  <div class="row justify-content-center align-items-center" style="height: 100vh;">
+    <div class="col-md-4">
+      <div class="card shadow-lg rounded-3">
+        <div class="card-body">
+          <!-- Imagen centrada en el formulario -->
+          <div class="text-center mb-4">
+            <img src="img/logo.png" alt="Logo" class="img-fluid" style="max-width: 120px;" />
+          </div>
+
+          <!-- Formulario de inicio de sesión -->
+          <form [formGroup]="loginForm" (ngSubmit)="fnLogin()">
+            <div class="form-group mb-3">
+              <label for="username">Nombre de Usuario:</label>
+              <input 
+                type="text" 
+                class="form-control" 
+                id="username" 
+                formControlName="username" 
+                placeholder="Ingrese su nombre de usuario"
+                required
+              />
+              <div *ngIf="loginForm.controls['username'].invalid && loginForm.controls['username'].touched" class="text-danger">
+                El usuario es obligatorio.
+              </div>
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="password">Contraseña:</label>
+              <input 
+                type="password" 
+                class="form-control" 
+                id="password" 
+                formControlName="password" 
+                placeholder="Ingrese su contraseña"
+                required
+              />
+              <div *ngIf="loginForm.controls['password'].invalid && loginForm.controls['password'].touched" class="text-danger">
+                La contraseña es obligatoria.
+              </div>
+            </div>
+
+            <!-- Botón de submit de tamaño igual al input -->
+            <div class="text-center">
+              <button 
+                type="submit" 
+                class="btn btn-primary w-100" 
+                [disabled]="loginForm.invalid"
+              >
+                Iniciar Sesión
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,129 @@
+<div class="container-fluid mt-4">
+  <div class="row mb-3">
+    <div class="col-12">
+      <div class="d-flex justify-content-between align-items-center">
+        <h4 class="text-uppercase font-weight-bold text-dark">Gestión de Tareas</h4>
+        <hr />
+        <button class="btn btn-success btn-sm" (click)="fnNuevo()">
+          <i class="fa fa-plus-circle"></i> Nueva Tarea
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white text-uppercase">
+          <h5>Estado: Por Hacer</h5>
+        </div>
+        <div class="card-body">
+          <p-accordion *ngIf="tareasPorHacer.length > 0">
+            <p-accordion-panel *ngFor="let item of tareasPorHacer; let i = index" [value]="i">
+              <app-item-tarea 
+                [tarea]="item"
+                (editar)="fnEditar(item)"
+                (eliminar)="fnConfEliminar(item)">
+              </app-item-tarea>
+            </p-accordion-panel>
+          </p-accordion>
+          <p *ngIf="tareasPorHacer.length === 0" class="text-center text-muted">No hay tareas por hacer</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-4">
+      <div class="card shadow-lg">
+        <div class="card-header bg-warning text-white text-uppercase">
+          <h5>Estado: En Progreso</h5>
+        </div>
+        <div class="card-body">
+          <p-accordion *ngIf="tareasEnProgreso.length > 0">
+            <p-accordion-panel *ngFor="let item of tareasEnProgreso; let i = index" [value]="i">
+              <app-item-tarea 
+                [tarea]="item"
+                (editar)="fnEditar(item)"
+                (eliminar)="fnConfEliminar(item)">
+              </app-item-tarea>
+            </p-accordion-panel>
+          </p-accordion>
+          <p *ngIf="tareasEnProgreso.length === 0" class="text-center text-muted">No hay tareas en progreso</p>
+        </div>
+      </div>
+    </div>
+  
+    <div class="col-sm-4">
+      <div class="card shadow-lg">
+        <div class="card-header bg-success text-white text-uppercase">
+          <h5>Estado: Completada</h5>
+        </div>
+        <div class="card-body">
+          <p-accordion *ngIf="tareasCompletadas.length > 0">
+            <p-accordion-panel *ngFor="let item of tareasCompletadas; let i = index" [value]="i">
+              <app-item-tarea 
+                [tarea]="item"
+                (editar)="fnEditar(item)"
+                (eliminar)="fnConfEliminar(item)">
+              </app-item-tarea>
+            </p-accordion-panel>
+          </p-accordion>
+          <p *ngIf="tareasCompletadas.length === 0" class="text-center text-muted">No hay tareas completadas</p>
+        </div>
+      </div>
+    </div>
+</div>
+  
+
+<div class="modal fade" id="modalForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form [formGroup]="tareaForm">
+        <div class="modal-header bg-dark text-white">
+          <h5 class="modal-title text-uppercase" id="exampleModalLabel">
+            ::: {{ tareaForm.controls['id'].value === 0 || tareaForm.controls['id'].value === null ? 'Nueva Tarea' : 'Editar Tarea' }} :::
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="fnCerrarModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group mb-3">
+            <label for="titulo" class="form-label">Título: <span style="color:red;">(*)</span></label>
+            <input type="text" class="form-control" formControlName="titulo" placeholder="Ingrese el título de la tarea" required>
+            <span *ngIf="tareaForm.controls['titulo'].invalid && tareaForm.controls['titulo'].touched" class="text-danger">
+              El título es obligatorio.
+            </span>
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="descripcion" class="form-label">Descripción: <span style="color:red;">(*)</span></label>
+            <textarea class="form-control" formControlName="descripcion" rows="3" placeholder="Describa brevemente la tarea" required></textarea>
+            <span *ngIf="tareaForm.controls['descripcion'].invalid && tareaForm.controls['descripcion'].touched" class="text-danger">
+              La descripción es obligatoria.
+            </span>
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="estado" class="form-label">Estado: <span style="color:red;">(*)</span></label>
+            <select class="form-select" formControlName="estado" required>
+              <option value="">::: Seleccione :::</option>
+              <option value="Por hacer">Por hacer</option>
+              <option value="En progreso">En progreso</option>
+              <option value="Completada">Completada</option>
+            </select>
+            <span *ngIf="tareaForm.controls['estado'].invalid && tareaForm.controls['estado'].touched" class="text-danger">
+              El estado es obligatorio.
+            </span>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button (click)="fnGuardar()"
+            type="button" class="btn btn-primary" [disabled]="!tareaForm.valid">
+            <i class="fa fa-save"></i> Guardar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+
+@import 'primeicons/primeicons.css';
+
+
+.alert {
+  z-index: 1060 !important; 
+}
+
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  /* Degradado de color de arriba a abajo */
+  background: linear-gradient(to bottom, #35b3f3, #1d326f);  
+}
